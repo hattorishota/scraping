@@ -4,6 +4,7 @@ import requests
 import time
 import tqdm
 
+# 曜日ごとのレースのページを取得
 def createURL(month, day):
     url = 'https://keirin.kdreams.jp/racecard/2021/' + str(month).zfill(2) + '/' + str(day).zfill(2) + '/'
     return url
@@ -11,7 +12,9 @@ def createURL(month, day):
 seedURLs = [ createURL(i, j) for i in range(4, 5, 1) for j in range(1, 2, 1)]
 # print(seedURLs)
 
+# レースごとのURlを取得する
 def get_race_urls(sourceURLs):
+
     #URLを格納するための辞書を定義
     race_urls = []
 
@@ -44,14 +47,16 @@ def get_race_urls(sourceURLs):
 race_urls = get_race_urls(seedURLs)
 print(race_urls)
 
-for race_url in tqdm.tqdm(race_urls):
-  try :
-    r = pd.read_html(race_url, header = 0) 
+# レースごとのURLをもとにループさせる
+for n, race_url in tqdm.tqdm(enumerate(race_urls)):
 
-    df = pd.DataFrame(r[0])
-    df.to_excel('keirin.xlsx')
+  # ページ内にあるtableタグの中身を取得
+  r = pd.read_html(race_url, header = 0) 
 
-    time.sleep(3)
+  df = pd.DataFrame(r[0])
 
-  except :
-    break
+  # エクセルで出力
+  df.to_csv('result' + str(n) + '.csv')
+
+  # 3秒待機
+  time.sleep(3)
