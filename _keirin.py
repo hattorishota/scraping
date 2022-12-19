@@ -89,8 +89,9 @@ def scrape_race_result(race_urls, pre_race_results={}):
 results = scrape_race_result(race_urls, race_results)
 
 # #各レースデータの行名をレースIDに変更
-# for key in results.keys():
-#     results[key].index = [key]*len(results[key])
-# #全データを結合
-# race_results = pd.concat([results[key] for key in results.keys()], sort=False)
-print(race_results)
+for key in results.keys():
+    results[key].index = [key]*len(results[key])
+#全データを結合
+race_results = pd.concat([results[key] for key in results.keys()], sort=False)
+
+print("race_results")
