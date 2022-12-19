@@ -94,4 +94,3 @@ results = scrape_race_result(race_urls, race_results)
 # #全データを結合
 # race_results = pd.concat([results[key] for key in results.keys()], sort=False)
 print(race_results)
-# 
