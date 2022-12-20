@@ -53,6 +53,7 @@ print(race_urls)
 # 現状：1レースごとにファイルが生成され、積み重なっていく。
 for n, race_url in tqdm.tqdm(enumerate(race_urls)):
 
+  # ループ1回目でデータを入れるためのフォルダを作成
   if n == 0:
     os.mkdir('race_data')
 
