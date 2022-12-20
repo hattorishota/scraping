@@ -69,6 +69,8 @@ for n, race_url in tqdm.tqdm(enumerate(race_urls)):
 
 
 # csvファイルを結合する
+# 現状：うまくいってない
+# 原因：csvファイルのそれぞれ1行目がなんとからしい
 
 # # ディレクトリ変更
 # os.chdir('/Users/hattorishota1/github.com/scraping/race_data')
