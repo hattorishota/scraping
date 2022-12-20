@@ -48,6 +48,7 @@ race_urls = get_race_urls(seedURLs)
 print(race_urls)
 
 # レースごとのURLをもとにループさせる
+# 現状：1レースごとにファイルが生成され、積み重なっていく。
 for n, race_url in tqdm.tqdm(enumerate(race_urls)):
 
   # ページ内にあるtableタグの中身を取得
