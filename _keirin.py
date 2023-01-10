@@ -1,3 +1,5 @@
+# 参考サイト：https://qiita.com/GOTOinfinity/items/877fc90168d84d8d1297
+
 import pandas as pd
 from bs4 import BeautifulSoup
 import requests
@@ -58,12 +60,13 @@ for n, race_url in tqdm.tqdm(enumerate(race_urls)):
     os.mkdir('race_data')
 
   # ページ内にあるtableタグの中身を取得
-  r = pd.read_html(race_url, header = 0) 
+  r = pd.read_html(race_url, header = 1) 
 
   df = pd.DataFrame(r[0])
 
   # エクセルで出力
   df.to_csv('race_data/result' + str(n) + '.csv')
+  # print(df)
 
   # 3秒待機
   time.sleep(3)
@@ -73,26 +76,26 @@ for n, race_url in tqdm.tqdm(enumerate(race_urls)):
 # 現状：うまくいってない
 # 原因：csvファイルのそれぞれ1行目がなんとからしい
 
-# # ディレクトリ変更
+# ディレクトリ変更
 # os.chdir('/Users/hattorishota1/github.com/scraping/race_data')
 
-# #1---フォルダ内のCSVファイルの一覧を取得
-# files = sorted(glob.glob('race_data/*.csv'))
+#1---フォルダ内のCSVファイルの一覧を取得
+files = sorted(glob.glob('race_data/*.csv'))
 
-# #2---ファイル数を取得
-# file_number = len(files)
+#2---ファイル数を取得
+file_number = len(files)
 
-# #3---CSVファイルの中身を読み出して、リスト形式にまとめる
-# csv_list = []
+#3---CSVファイルの中身を読み出して、リスト形式にまとめる
+csv_list = []
 
-# for file in files:
-#     csv_list.append(pd.read_csv(file))
+for file in files:
+    csv_list.append(pd.read_csv(file))
 
-# #4---CSVファイルの結合
-# df = pd.concat(csv_list, axis = 0, sort = True)
+#4---CSVファイルの結合
+df = pd.concat(csv_list, axis = 0, sort = True)
 
-# #5---CSVファイル出力
-# df.to_csv("race_data.csv", index = False)
+#5---CSVファイル出力
+df.to_csv("race_data.csv", index = False)
 
-# #6---完了合図
-# print(file_number,' 個のCSVファイルを結合完了！！')
+#6---完了合図
+print(file_number,' 個のCSVファイルを結合完了！！')
