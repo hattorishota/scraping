@@ -7,6 +7,7 @@ from bs4 import BeautifulSoup
 import requests
 import time
 import tqdm
+import shutil
 import os
 import glob
 
@@ -65,7 +66,12 @@ for n, race_url in tqdm.tqdm(enumerate(race_urls)):
 
     # ループ1回目でデータを入れるためのフォルダを作成
     if n == 0:
-        os.mkdir('_raceData')
+        if not os.path.exists('_raceData'):
+            os.mkdir('_raceData')
+        else:
+            # すでにディレクトリが存在していれば削除してから再度作成
+            shutil.rmtree('_raceData')
+            os.mkdir('_raceData')
 
     # ページ内にあるtableタグの中身を取得
     r = pd.read_html(race_url, header=1)
@@ -98,10 +104,15 @@ for file in files:
     csv_list.append(pd.read_csv(file))
 
 # 4---CSVファイルの結合
-df = pd.concat(csv_list, axis=0, sort=True)
+df = pd.concat(csv_list, axis=0, sort=False)
 
 # 5---CSVファイル出力
-df.to_csv("_raceData.csv", index=False)
+if not os.path.exists('_raceData.csv'):
+    df.to_csv("_raceData.csv", index=False)
+else:
+    # すでにファイルが存在していれば削除してから再度作成
+    os.remove('_raceData.csv')
+    df.to_csv("_raceData.csv", index=False)
 
 # 6---完了合図
-print(file_number, ' 個のCSVファイルを結合完了！！')
+print(file_number, ' 個のCSVファイルを結合したにゃん')
